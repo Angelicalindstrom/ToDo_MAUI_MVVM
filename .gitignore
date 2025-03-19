@@ -1,0 +1,28 @@
+# MAUI-specifika filer
+bin/
+obj/
+AppPackages/
+BundleArtifacts/
+*.db
+*.db-journal
+*.pfx
+
+# Rider-specifika filer
+.idea/
+*.sln.iml
+
+# Visual Studio-specifika filer
+.vs/
+*.user
+*.suo
+
+# Plattformsspecifika filer
+*.apk
+*.ipa
+*.aab
+*.app/
+
+# NuGet-paket och byggfiler
+*.nupkg
+packages/
+project.lock.json
