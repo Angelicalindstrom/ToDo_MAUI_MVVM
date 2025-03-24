@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ToDoList_MVVM_MAUI.Views.ToDoPage">
+
+    <VerticalStackLayout>
+        <Label Text="Todo Page" Padding="20" 
+               VerticalOptions="CenterAndExpand"
+               HorizontalOptions="CenterAndExpand" />
+
+        <StackLayout>
+            <!-- Entry - newTodo -->
+            <Entry x:Name="TodoEntry" Placeholder="Skriv din Todo"/>
+
+            <!-- Button bunden till kommando i ViewModel -->
+            <Button Text="Lägg Till Todo"
+                    Command="{Binding AddTodoCommand}"
+                    CommandParameter="{Binding Text, Source={x:Reference TodoEntry}}" />
+
+            <ListView ItemsSource="{Binding TodoItems}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Title}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </VerticalStackLayout>
+</ContentPage>

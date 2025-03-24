@@ -1,14 +1,32 @@
-﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:ToDoList_MVVM_MAUI"
              x:Class="ToDoList_MVVM_MAUI.App">
+
+    <!-- Definiera globala resurser -->
     <Application.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
-                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-            </ResourceDictionary.MergedDictionaries>
+
+            <!-- 🎨 Färger -->
+            <Color x:Key="Primary">#007AFF</Color>
+            <Color x:Key="PrimaryLight">#70A1FF</Color>
+            <Color x:Key="PrimaryDark">#0051A8</Color>
+            <Color x:Key="Accent">#FF9500</Color>
+            <Color x:Key="BackgroundColor">#F8F8F8</Color>
+
+            <!-- 🌟 Stilar -->
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource PrimaryDark}" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="Padding" Value="10,5" />
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>
