@@ -4,12 +4,40 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ToDoList_MVVM_MAUI"
-    Shell.FlyoutBehavior="Disabled"
-    Title="ToDoList_MVVM_MAUI">
+    xmlns:views="clr-namespace:ToDoList_MVVM_MAUI.Views"
+    Shell.FlyoutBehavior="Flyout">
+    
+    <Shell.TitleView>
+        <Grid  HeightRequest="50" Padding="0,0, 45,0">
+            <Image
+                Source="todo.png"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+        </Grid>
+    </Shell.TitleView>
+    
+    <!-- Flyout Header -->
+    <Shell.FlyoutHeader>
+        <StackLayout Padding="20">
+            <Image
+                Source="todo.png"
+                HeightRequest="100"
+                Aspect="AspectFit"
+                SemanticProperties.Description="To Do Logo" />
+        </StackLayout>
+    </Shell.FlyoutHeader>
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <!-- Meny -->
+    <FlyoutItem Title="Todo List" Icon="todo.png">
+        <ShellContent Title="Todo List"
+                      ContentTemplate="{DataTemplate views:ToDoPage}"
+                      Route="TodoPage" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Main" Icon="todo.png">
+        <ShellContent Title="Main"
+                      ContentTemplate="{DataTemplate views:MainPage}"
+                      Route="Mainpage" />
+    </FlyoutItem>
 
 </Shell>
