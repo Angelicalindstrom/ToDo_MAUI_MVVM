@@ -10,6 +10,10 @@ public class ToDoRepository : IToDoRepository
         _database.CreateTableAsync<TodoItem>().Wait();
     }
 
+    public ToDoRepository() : this(Path.Combine(FileSystem.AppDataDirectory, "todos.db"))
+    {
+    }
+
     public async Task<List<TodoItem>> GetAllTodoItems()
     {
         try
@@ -41,25 +45,19 @@ public class ToDoRepository : IToDoRepository
     {
         try
         {
-            return await _database.UpdateAsync(item);
+            int rowsAffected = await _database.UpdateAsync(item);
+            Console.WriteLine($"SQLite: Uppdaterade {rowsAffected} rader i databasen.");
+            return rowsAffected; // Om 0, så sparades inget
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Error updating Todo item: {e.Message}");
+            Console.WriteLine($"❌ Fel vid uppdatering: {e.Message}");
             return 0;
         }
     }
 
-    public async Task<int> DeleteTodoItem(TodoItem item)
+    public Task<int> DeleteTodoItem(TodoItem item)
     {
-        try
-        {
-            return await _database.DeleteAsync(item);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"Error deleting Todo item: {e.Message}");
-            return 0;
-        }
+        throw new NotImplementedException();
     }
 }

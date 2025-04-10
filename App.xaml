@@ -1,11 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converter1="clr-namespace:ToDoList_MVVM_MAUI.Converter"
+
              x:Class="ToDoList_MVVM_MAUI.App">
 
     <!-- Definiera globala resurser -->
     <Application.Resources>
         <ResourceDictionary>
+
+            <converter1:BooleanToTextConverter x:Key="BooleanToTextConverter" />
+            <converter1:BooleanToColorConverter x:Key="BooleanToColorConverter" />
 
             <!-- 🎨 Färger -->
             <Color x:Key="Primary">#007AFF</Color>
@@ -26,6 +31,71 @@
                 <Setter Property="CornerRadius" Value="10" />
                 <Setter Property="Padding" Value="10,5" />
             </Style>
+            
+            
+            <!-- My styles -->
+            <!-- Style buttons todoView -->
+            <Style x:Key="TodoToggleButtonStyle" TargetType="Button">
+                <Setter Property="WidthRequest" Value="90"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="HorizontalOptions" Value="Start"/>
+                <Setter Property="BackgroundColor" Value="LightGray"/>
+            </Style>
+            
+            <Style x:Key="NavigateButtonStyle" TargetType="Button">
+                <Setter Property="WidthRequest" Value="150"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="BackgroundColor" Value="Goldenrod"/>
+            </Style>
+            
+            <Style x:Key="AddButtonStyle" TargetType="Button">
+                <Setter Property="WidthRequest" Value="50"/>
+                <Setter Property="HeightRequest" Value="50"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="BackgroundColor" Value="Teal"/>
+            </Style>
+
+            <!-- Style label todoView -->
+            <Style x:Key="TodoTitleLabelStyle" TargetType="Label">
+                <Setter Property="WidthRequest" Value="180"/>
+                <Setter Property="LineBreakMode" Value="TailTruncation"/>
+                <Setter Property="HorizontalTextAlignment" Value="End"/>
+                <Setter Property="HorizontalOptions" Value="End"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="FontSize" Value="16"/>
+            </Style>
+
+
+            <!-- Style grid-layout todoView -->
+            <Style x:Key="TodoItemGridStyle" TargetType="Grid">
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="RowDefinitions">
+                    <Setter.Value>
+                        <RowDefinitionCollection>
+                            <RowDefinition Height="Auto"/>
+                        </RowDefinitionCollection>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ColumnDefinitions">
+                    <Setter.Value>
+                        <ColumnDefinitionCollection>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="200"/>
+                        </ColumnDefinitionCollection>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ColumnSpacing" Value="20"/>
+            </Style>
+
 
         </ResourceDictionary>
     </Application.Resources>

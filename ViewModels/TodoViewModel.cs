@@ -1,60 +1,74 @@
-using System.Collections.ObjectModel;
-using System.Windows.Input;
-using ToDoList_MVVM_MAUI.Services;
-
-namespace ToDoList_MVVM_MAUI.ViewModels;
-
-public class TodoViewModel : BaseViewModel
+namespace ToDoList_MVVM_MAUI.ViewModels
 {
-    private readonly IToDoRepository _repository;
-    
-    public ObservableCollection<TodoItem> TodoItems { get; set; }
-    public ICommand AddTodoCommand { get; }
-
-    
-    public TodoViewModel(IToDoRepository repository)
+    public class TodoViewModel : BaseViewModel
     {
-        _repository = repository;
-        TodoItems = new ObservableCollection<TodoItem>();
+        private readonly IToDoRepository _repository;
+        private readonly INavigationService _navigationService;
 
-        _ = LoadTodos();
-        AddTodoCommand = new Command<string>(async void (title) => await AddTodoItem(title));
-    }
+        public ObservableCollection<TodoItemViewModel> TodoItems { get; set; }
+        public ICommand AddTodoCommand { get; }
+        public ICommand NavigateToMainPageCommand { get; }
 
-    // Add NewTodoItem
-    private async Task AddTodoItem(string title)
-    {
-        if (string.IsNullOrWhiteSpace(title)) return;
-
-        try
+        private string _title;
+        
+        
+        // Standardkonstruktor (utan beroenden för XAML)
+        public TodoViewModel()
         {
-            var newItem = new TodoItem { Title = title, IsCompleted = false };
+            TodoItems = new ObservableCollection<TodoItemViewModel>();
+            AddTodoCommand = new Command(async () => await AddTodoItem());
+            NavigateToMainPageCommand = new Command(async () => await NavigateToMainPage());
+        }
+
+        // Konstruktor med dependency injection
+        public TodoViewModel(IToDoRepository repository, INavigationService navigationService) : this()
+        {
+            _repository = repository;
+            _navigationService = navigationService;
+            _ = LoadTodos();
+        }
+        
+        public string Title
+        {
+            get => _title;
+            set
+            {
+                if (_title != value)
+                {
+                    _title = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        // Lägg till en ny Todo
+        private async Task AddTodoItem()
+        {
+            if (string.IsNullOrWhiteSpace(Title)) return;
+
+            var newItem = new TodoItem { Title = Title, IsCompleted = false };
             await _repository.AddTodoItem(newItem);
-            await LoadTodos();  // LoadAll
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error adding todo: {ex.Message}");
-        }
-    }
+            TodoItems.Add(new TodoItemViewModel(newItem, _repository));
 
-    // Load All from Db
-    private async Task LoadTodos()
-    {
-        try
+            Title = string.Empty;
+        }
+
+        // Hämta alla Todos
+        private async Task LoadTodos()
         {
             TodoItems.Clear();
             var items = await _repository.GetAllTodoItems();
+
             foreach (var item in items)
             {
-                TodoItems.Add(item);
+                TodoItems.Add(new TodoItemViewModel(item, _repository));
             }
         }
-        catch (Exception ex)
+
+        // Navigera till MainPage
+        private async Task NavigateToMainPage()
         {
-            Console.WriteLine($"Error loading todos: {ex.Message}");
+            await _navigationService.NavigateToAsync("//MainPage");
         }
     }
-    
-    
 }

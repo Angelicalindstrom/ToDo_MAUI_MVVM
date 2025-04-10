@@ -1,11 +1,11 @@
 namespace ToDoList_MVVM_MAUI.ViewModels;
 
-public class BaseViewModel: INotifyPropertyChanged
+public class BaseViewModel : INotifyPropertyChanged
 {
-    public event PropertyChangedEventHandler? PropertyChanged;
+    public event PropertyChangedEventHandler PropertyChanged;
 
-    protected void OnPropertyChanged(string propertyName)
+    protected void OnPropertyChanged([CallerMemberName] string name = "")
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }

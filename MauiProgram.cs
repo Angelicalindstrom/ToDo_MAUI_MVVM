@@ -1,4 +1,6 @@
-﻿namespace ToDoList_MVVM_MAUI;
+﻿using ToDoList_MVVM_MAUI.Services;
+
+namespace ToDoList_MVVM_MAUI;
 
 public static class MauiProgram
 {
@@ -15,6 +17,8 @@ public static class MauiProgram
         // Register Services for Dependency Injection
         string dbPath = Path.Combine(FileSystem.AppDataDirectory, "todos.db");
         builder.Services.AddSingleton<IToDoRepository>(s => new ToDoRepository(dbPath));
+        // NavigationService och INavigation
+        builder.Services.AddSingleton<INavigationService, NavigationService>();
 
         // Register ViewModels
         builder.Services.AddTransient<TodoViewModel>();

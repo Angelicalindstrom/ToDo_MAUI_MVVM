@@ -37,7 +37,7 @@
     <FlyoutItem Title="Main" Icon="todo.png">
         <ShellContent Title="Main"
                       ContentTemplate="{DataTemplate views:MainPage}"
-                      Route="Mainpage" />
+                      Route="MainPage" />
     </FlyoutItem>
 
 </Shell>
