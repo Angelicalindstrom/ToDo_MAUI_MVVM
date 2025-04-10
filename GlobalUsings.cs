@@ -5,3 +5,6 @@ global using ToDoList_MVVM_MAUI.Data;
 global using System.ComponentModel;
 global using System.Collections.ObjectModel;
 global using SQLite;
+global using System.Runtime.CompilerServices;
+global using System.Windows.Input;
+global using ToDoList_MVVM_MAUI.Services;

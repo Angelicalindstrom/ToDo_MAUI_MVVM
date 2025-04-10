@@ -1,29 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:ToDoList_MVVM_MAUI.ViewModels"
              x:Class="ToDoList_MVVM_MAUI.Views.ToDoPage">
 
-    <VerticalStackLayout>
-        <Label Text="Todo Page" Padding="20" 
-               VerticalOptions="CenterAndExpand"
-               HorizontalOptions="CenterAndExpand" />
+    <ContentPage.BindingContext>
+        <viewModels:TodoViewModel />
+    </ContentPage.BindingContext>
 
-        <StackLayout>
-            <!-- Entry - newTodo -->
-            <Entry x:Name="TodoEntry" Placeholder="Skriv din Todo"/>
-
-            <!-- Button bunden till kommando i ViewModel -->
-            <Button Text="Lägg Till Todo"
-                    Command="{Binding AddTodoCommand}"
-                    CommandParameter="{Binding Text, Source={x:Reference TodoEntry}}" />
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+            <Label Text="Todo Page" 
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand" />
+            
+            <Grid Padding="0,0,0,0" RowDefinitions="Auto" ColumnDefinitions="*,Auto" ColumnSpacing="30">
+                <!-- Entry - AddTodo -->
+                <Entry  Grid.Row="0" Grid.Column="0" Text="{Binding Title}" Placeholder="Skriv ny Todo" />
+                <!-- Button bound to AddTodoCommand, ViewModel -->
+                <Button Grid.Row="0" Grid.Column="1"  Text="Lägg Till Todo"
+                        Command="{Binding AddTodoCommand}" Style="{StaticResource AddButtonStyle}"/>
+            </Grid>
+            <!-- Button bound to NavigateToMainPageCommand, ViewModel -->
+            <Button Text="Till MainPage"
+                    Command="{Binding NavigateToMainPageCommand}"
+                    Style="{StaticResource NavigateButtonStyle}"/>
 
             <ListView ItemsSource="{Binding TodoItems}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding Title}" />
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Padding="10">
+                                <Grid Style="{StaticResource TodoItemGridStyle}" 
+                                      Padding="0,0,0,0" RowDefinitions="Auto" 
+                                      ColumnDefinitions="*,*,Auto" ColumnSpacing="30">
+                                    <Button Grid.Row="0" Grid.Column="0"
+                                            Style="{StaticResource TodoToggleButtonStyle}"
+                                            Text="{Binding IsCompleted,
+                                            Converter={StaticResource BooleanToTextConverter}}"
+                                            Command="{Binding ToggleCommand}"
+                                            CommandParameter="{Binding . }"
+                                            BackgroundColor="{Binding IsCompleted,
+                                            Converter={StaticResource BooleanToColorConverter}}"/>
+                                    
+                                    <Label Grid.Row="0" Grid.Column="2" 
+                                           Style="{StaticResource TodoTitleLabelStyle}"
+                                           Text="{Binding Title}" HorizontalOptions="End"/>
+                                    
+                                </Grid>
+                            </StackLayout>
+                        </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </StackLayout>
-    </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
